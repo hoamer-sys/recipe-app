@@ -2,7 +2,6 @@
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 
-// TypeScript type for your recipe
 type Recipe = {
   id: number;
   slug: string;
@@ -14,23 +13,23 @@ type Recipe = {
 
 interface RecipePageProps {
   params: {
-    slug: string; // comes from URL
+    slug: string;
   };
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
   const { slug } = params;
 
-  // Fetch recipe by slug
+  // Fixed Supabase type usage
   const { data: recipe, error } = await supabase
-    .from<Recipe>("recipes")
-    .select("*")
+    .from("recipes")
+    .select<Recipe>("*")
     .eq("slug", slug)
     .single();
 
   if (error || !recipe) {
     console.error("Supabase fetch error:", error);
-    return notFound(); // shows 404 page
+    return notFound();
   }
 
   return (
