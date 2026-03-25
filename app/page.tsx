@@ -1,3 +1,4 @@
+import Link from "next/link";
 export const dynamic = 'force-dynamic';
 import { supabase } from '../lib/supabaseClient';
 
@@ -11,9 +12,15 @@ export default async function Home() {
     <div className="p-10">
       <h1 className="text-2xl mb-4">Recipes</h1>
 
-      {recipes?.map((recipe) => (
-        <div key={recipe.id} className="border p-4 mb-4">
-          <h2 className="text-xl">{recipe.title}</h2>
+      import Link from "next/link";
+
+{recipes.map((recipe) => (
+  <Link key={recipe.id} href={`/recipes/${recipe.id}`}>
+    <div className="border p-4 rounded hover:bg-gray-50 cursor-pointer">
+      <h2 className="text-lg font-semibold">{recipe.title}</h2>
+    </div>
+  </Link>
+))}
           <p className="whitespace-pre-line"></p>
           <div>
   <strong>Ingredients:</strong>
