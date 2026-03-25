@@ -15,9 +15,15 @@ export default async function Home() {
         <div key={recipe.id} className="border p-4 mb-4">
           <h2 className="text-xl">{recipe.title}</h2>
           <p className="whitespace-pre-line"></p>
-          <p><strong>Ingredients:</strong> {recipe.ingredients}</p>
+          <p><strong>Ingredients:</strong> {recipe.ingredients}
+          {recipe.ingredients.split('\n').map((line, i) => (
+    <div key={i}>{line}</div>
+  ))}</p>
           <p className="whitespace-pre-line"></p>
-          <p><strong>Instructions:</strong> {recipe.instructions}</p>
+          <p><strong>Instructions:</strong> {recipe.instructions}
+          {recipe.ingredients.split('\n').map((line, i) => (
+    <div key={i}>{line}</div>
+  ))}</p>
         </div>
       ))}
     </div>
