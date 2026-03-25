@@ -1,10 +1,9 @@
-// app/recipes/[slug]/page.tsx
+// app/recipes/[id]/page.tsx
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 
 interface Recipe {
   id: number;
-  slug: string;
   title: string;
   ingredients: string;
   instructions: string;
@@ -13,18 +12,22 @@ interface Recipe {
 
 interface RecipePageProps {
   params: {
-    slug: string;
+    id: string; // comes from the URL
   };
 }
 
 export default async function RecipePage({ params }: RecipePageProps) {
-  const { slug } = params;
+  const recipeId = Number(params.id);
 
-  // ✅ Correct Supabase fetch for v2
+  if (isNaN(recipeId)) {
+    return notFound(); // invalid id
+  }
+
+  // Fetch recipe by numeric ID
   const { data, error } = await supabase
-    .from("recipes")       // no generics here
-    .select("*")           // just string, no <Recipe>
-    .eq("slug", slug)
+    .from("recipes")    // no generics
+    .select("*")
+    .eq("id", recipeId)
     .single();
 
   if (error || !data) {
@@ -32,7 +35,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
     return notFound();
   }
 
-  const recipe = data as Recipe; // type assertion for TypeScript
+  const recipe = data as Recipe;
 
   return (
     <div className="max-w-2xl mx-auto p-4">
