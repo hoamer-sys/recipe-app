@@ -40,16 +40,16 @@ export default function AddRecipe() {
       />
 
       <textarea
-        className="border p-2 block mb-2"
-        placeholder="Ingredients"
-        onChange={(e) => setIngredients(e.target.value)}
-      />
+  className="border p-2 block mb-2 whitespace-pre-line"
+  placeholder="Ingredients"
+  onChange={(e) => setIngredients(e.target.value)}
+/>
 
       <textarea
-        className="border p-2 block mb-2"
-        placeholder="Instructions"
-        onChange={(e) => setInstructions(e.target.value)}
-      />
+  className="border p-2 block mb-2 whitespace-pre-line"
+  placeholder="Instructions"
+  onChange={(e) => setInstructions(e.target.value)}
+/>
 
       <button className="bg-blue-500 text-white p-2" onClick={submitRecipe}>
         Submit
