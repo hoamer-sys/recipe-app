@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabaseClient";
 
 export default async function RecipePage({ params }: { params: { id: string } }) {
-  const supabase = supabase;
+  
 
   const { data: recipe, error } = await supabase
     .from("recipes")
