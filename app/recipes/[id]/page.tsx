@@ -2,14 +2,14 @@
 import { supabase } from "@/lib/supabaseClient";
 import { notFound } from "next/navigation";
 
-type Recipe = {
+interface Recipe {
   id: number;
   slug: string;
   title: string;
   ingredients: string;
   instructions: string;
   [key: string]: any;
-};
+}
 
 interface RecipePageProps {
   params: {
@@ -20,17 +20,19 @@ interface RecipePageProps {
 export default async function RecipePage({ params }: RecipePageProps) {
   const { slug } = params;
 
-  // Fixed Supabase type usage
-  const { data: recipe, error } = await supabase
-    .from("recipes")
-    .select<Recipe>("*")
+  // ✅ Correct Supabase fetch for v2
+  const { data, error } = await supabase
+    .from("recipes")       // no generics here
+    .select("*")           // just string, no <Recipe>
     .eq("slug", slug)
     .single();
 
-  if (error || !recipe) {
+  if (error || !data) {
     console.error("Supabase fetch error:", error);
     return notFound();
   }
+
+  const recipe = data as Recipe; // type assertion for TypeScript
 
   return (
     <div className="max-w-2xl mx-auto p-4">
