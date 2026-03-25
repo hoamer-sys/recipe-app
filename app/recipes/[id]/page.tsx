@@ -6,7 +6,7 @@ export default async function RecipePage({ params }: { params: { id: string } })
   const { data: recipe, error } = await supabase
     .from("recipes")
     .select("*")
-    .eq("id", params.id)
+    .eq("id", Number(params.id))
     .single();
 
   if (error || !recipe) {
